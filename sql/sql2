@@ -1,0 +1,2 @@
+update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 1;
+update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 3;

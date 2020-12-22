@@ -1,0 +1,51 @@
+/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1文件执行的伪代码为:0
+/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2文件执行的伪代码为:1
+所有SQL执行顺序的6组合情况: [[0, 0, 1, 1], [0, 1, 0, 1], [0, 1, 1, 0], [1, 0, 0, 1], [1, 0, 1, 0], [1, 1, 0, 0]]
+
+Tue Dec 22 14:29:48 CST 2020= = = = = = begin TESTCASE1 -> [0, 0, 1, 1]   = = = = = = 
+1608618588696ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 2;
+1608618588707ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 4;
+1608618588711ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 1;
+1608618588714ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 3;
+Tue Dec 22 14:29:48 CST 2020= = = = = = end   TESTCASE1 -> [0, 0, 1, 1]  = = = = = = 
+
+
+Tue Dec 22 14:29:48 CST 2020= = = = = = begin TESTCASE2 -> [0, 1, 0, 1]   = = = = = = 
+1608618588733ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 2;
+1608618588738ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 1;
+1608618588741ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 4;
+1608618588744ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 3;
+Tue Dec 22 14:29:48 CST 2020= = = = = = end   TESTCASE2 -> [0, 1, 0, 1]  = = = = = = 
+
+
+Tue Dec 22 14:29:48 CST 2020= = = = = = begin TESTCASE3 -> [0, 1, 1, 0]   = = = = = = 
+1608618588755ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 2;
+1608618588759ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 1;
+1608618588762ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 3;
+1608618588765ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 4;
+Tue Dec 22 14:29:48 CST 2020= = = = = = end   TESTCASE3 -> [0, 1, 1, 0]  = = = = = = 
+
+
+Tue Dec 22 14:29:48 CST 2020= = = = = = begin TESTCASE4 -> [1, 0, 0, 1]   = = = = = = 
+1608618588777ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 1;
+1608618588781ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 2;
+1608618588785ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 4;
+1608618588788ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 3;
+Tue Dec 22 14:29:48 CST 2020= = = = = = end   TESTCASE4 -> [1, 0, 0, 1]  = = = = = = 
+
+
+Tue Dec 22 14:29:48 CST 2020= = = = = = begin TESTCASE5 -> [1, 0, 1, 0]   = = = = = = 
+1608618588798ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 1;
+1608618588802ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 2;
+1608618588806ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 3;
+1608618588809ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 4;
+Tue Dec 22 14:29:48 CST 2020= = = = = = end   TESTCASE5 -> [1, 0, 1, 0]  = = = = = = 
+
+
+Tue Dec 22 14:29:48 CST 2020= = = = = = begin TESTCASE6 -> [1, 1, 0, 0]   = = = = = = 
+1608618588819ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 1;
+1608618588823ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 3;
+1608618588826ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 122 where ID = 2;
+1608618588829ms - [client-/Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1] execute >>  update test.TEST_TIDB_TRANSACTION set VALUE = 322 where ID = 4;
+Tue Dec 22 14:29:48 CST 2020= = = = = = end   TESTCASE6 -> [1, 1, 0, 0]  = = = = = = 
+
