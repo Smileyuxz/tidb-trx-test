@@ -33,8 +33,7 @@ public class CommonUtil {
                 continue;
             }
 
-            int sqlCount = CommonUtil.getFileLineNum(sqlFile);
-            if (sqlCount == 0) {
+            if (file.length() == 0) {
                 System.out.println("没有sql,请检查空文件: " + sqlFile);
                 hasError = true;
                 continue;
@@ -89,7 +88,7 @@ public class CommonUtil {
                 return -1;
             }
         }
-        return lineNumber;
+        return lineNumber + 1;
     }
 
 }
