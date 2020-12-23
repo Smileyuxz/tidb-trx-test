@@ -15,25 +15,24 @@
 > 入参为文件名,可以两个或两个以上  
 > nohup java -jar tidb-trx-test.jar $1 $2 .. > tidbtrxtest.log &  
 > 样例:    
-nohup java -jar tidb-trx-test-1.0.jar /Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql1 /Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test2/sql/sql2 > tidbtrxtest.log &
+nohup java -jar tidb-trx-test-1.0.jar /Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test/sql/sql1 /Users/yuxiuzhen/IdeaProjects/ALL_IMS/tidb-trx-test/sql/sql2 > tidbtrxtest.log &
 
 
 #####  二、实现思路
-> 1. 读取文件的行数N+1( +1:表示commit的执行动作)
-> 2. 因每个文件的执行顺序确定,生成一个N+1长度的数组(同一个文件的数组元素全为一个数字,表示一条sql)
-> 3. 把需要执行的文件的数组合并
-> 4. 递归实现这个有重复元素数组的全排列,列出所有的可能执行顺序
-> 5. 按执行顺序依次读取事务文件中的sql,对应的client执行sql
-> 6. 将执行结果打印在日志中
-> 7. 异常情况  
-     - 如果更新条件一致会产生block,测试时的tidb默认60s会返回lock wait锁超时的错误),捕获异常继续执行下一个case  
+> 1. 考虑到需要每个事务文件中的sql的执行顺序是确定的，所以把每个事务文件里的一个sql都抽象成相同的元素(下面实现中是一个文件用一个数字表示的)   
+> 2. 每个事务文件抽象成一个元素相同的数组,长度为N+1,+1表示commit语句(如题中sql1文件表示为[0,0,0],sql2文件表示为[1,1])  
+> 3. 将两个或者多个事务文件的sql组成一个数组(如题中则组合之后为[0,0,0,1,1])  
+> 4. 将3中组合的数组进行全排序,实现中用了回溯+树层上去重,减少回溯次数(如题中因为多了commit执行的排序,所以最终的执行情况不止3种,具体见sql/tidbtrxtest.log的执行结果)  
+> 5. 按上面的排列结果,一次执行CASE,如[0,0,0,1,1]的case,则建立两个客户端,按0和1出现的顺序分别按行读取sql1和sql2中的sql
+> 6. 异常情况  
+          - 如果更新条件一致会产生block,测试时的tidb默认60s会返回lock wait锁超时的错误),捕获异常继续执行下一个case   
 
 
 
 #####  三、暂未完全实现的地方
 > - 如果文件存在相同条件的更新SQL,会产生锁block等待, 超时会执行失败,目前的处理是捕捉异常,判定当前CASE执行失败,继续下一个CASE执行;
 > - 程序未判断内存溢出的情况。
-
+> - 文件中空行的情况未实现过滤
 
 
 
